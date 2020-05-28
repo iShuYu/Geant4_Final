@@ -25,7 +25,7 @@ Step1: 在DetectorConstruction.cc中修改探测器的材料，尺寸，结构�
 Step4: 自己写一个SteppingAction（因为修改的是B2a，这个例子没有SteppingAction，可以借鉴B4中的SteppingAction）;  
         1.添加需要的头文件（其中SteppingAction.hh需要自己编写），注意到加入了AntiNeutrinoE.hh。主要功能是判断粒子径迹为反中微子，那么就记录信息到EventAction中创建的变量里;  
         2.编写相应的头文件（其实按照顺序说是先编写，但是谁让我菜只能借鉴别人的代码）;  
-        
+        3.在ActionInitialization中添加相应的初始化条件（因为之前没有SteppingAction）
 Step5: 编写一个PhysicsList.hh和PhysicsList.cc;  
  
 
