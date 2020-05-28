@@ -9,24 +9,27 @@ Step1: 在DetectorConstruction.cc中修改探测器的材料，尺寸，结构�
         6.在void B2aDetectorConstruction::SetChamberMaterial(G4String materialName)中删除复制过程;    
         7.注释头文件DetectorConstruction.hh中不必要的东西，并将fLogicChamber改为一重指针（其实为了代码的好看应该改成logicDetector但是可能会         涉及到别的改动，所以作罢）;  
         8.删除DetectorMessenger.cc和对应头文件中有关于Target的部分，不需要;  
-        
- Step2: 在RunAction.cc中做修改，其中包括BeginOfRun，EndOfRun;  
+
+Step2: 修改PrimaryGeneratorAction，主要是修改粒子的信息，打入粒子的数量之类的;
+        1.定义粒子枪：粒子的动能，粒子的位置，动量等等信息;
+
+ Step3: 在RunAction.cc中做修改，其中包括BeginOfRun，EndOfRun;  
         1.设置RunAction的初始值（注意在RunAction.hh中添加相应的计数函数）;  
         2.在RunAction中创建tree储存需要的变量（注意，这里储存的变量需要refer to你的PhysicsList），这个例子只关心反中微子;  
         3.在BeginOfRun中创建文件，用于储存结果;  
         4.在EndOfRun中将结果写入在前一步创建的文件中;  
    
- Step3: 在EventAction.cc中做修改，其中包括BeginOfEvent，EndOfEvent;  
+ Step4: 在EventAction.cc中做修改，其中包括BeginOfEvent，EndOfEvent;  
         1.添加需要的头文件，注释不必要的头文件，比如我们不需要记录径迹，那我们就注释G4Trajectory*.hh;  
         2.那么在EndOfEvent中就可以注释掉和Trajectory（轨迹，弹道）有关的部分;  
         3.在BeginOfEvent中设置每个变量的初值（注意同时在EventAction.hh中声明这些变量），这些变量的赋值在SteppingAction.cc中执行，下一步会说到;  
         4.在EndOfEvent中Fill每个Branch的值;  
          
-Step4: 自己写一个SteppingAction（因为修改的是B2a，这个例子没有SteppingAction，可以借鉴B4中的SteppingAction）;  
+Step5: 自己写一个SteppingAction（因为修改的是B2a，这个例子没有SteppingAction，可以借鉴B4中的SteppingAction）;  
         1.添加需要的头文件（其中SteppingAction.hh需要自己编写），注意到加入了AntiNeutrinoE.hh。主要功能是判断粒子径迹为反中微子，那么就记录信息到EventAction中创建的变量里;  
         2.编写相应的头文件（其实按照顺序说是先编写，但是谁让我菜只能借鉴别人的代码）;  
         3.在ActionInitialization中添加相应的初始化条件（因为之前没有SteppingAction）
-Step5: 编写一个PhysicsList.hh和PhysicsList.cc;  
+Step6: 编写一个PhysicsList.hh和PhysicsList.cc;  
  
 
 
